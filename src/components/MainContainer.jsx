@@ -6,6 +6,7 @@ import RowContainer from "./RowContainer";
 import { useStateValue } from "../context/StateProvider";
 import MenuContainer from "./MenuContainer";
 import CartContainer from "./CartContainer";
+import Footer from "./Footer";
 
 const MainContainer = () => {
   const [{ foodItems, cartShow }, dispatch] = useStateValue();
@@ -14,7 +15,7 @@ const MainContainer = () => {
   useEffect(() => {}, [scrollValue, cartShow]);
 
   return (
-    <div className="w-full h-auto flex flex-col items-center justify-center ">
+    <div className="w-full h-auto flex flex-col items-center justify-center " id="maincont">
       <HomeContainer />
 
       <section className="w-full my-6">
@@ -50,6 +51,7 @@ const MainContainer = () => {
       <MenuContainer />
 
       {cartShow && <CartContainer />}
+      <Footer />
     </div>
   );
 };

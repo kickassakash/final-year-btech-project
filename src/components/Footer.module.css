@@ -1,0 +1,64 @@
+.container {
+  color: black;
+  width: auto;
+  height: calc(100vh - 250px);
+  background-color: #F6F1F1;
+  display: flex;
+  -webkit-box-shadow: 10px 17px 69px -6px rgba(0,0,0,0.75);;
+  /* box-shadow: inset; */
+
+}
+
+.item {
+  flex: 1;
+  position: relative;
+  display: flex;
+}
+
+.item:last-child {
+  flex: 2;
+  padding: 50px;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 28px;
+  color: #b7903c;
+}
+
+.text {
+  font-size: 20px;
+  color: black;
+}
+
+.motto {
+  color: black;
+  /* color: rgb(211, 211, 211); */
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    height: auto;
+    text-align: center;
+  }
+  .item:first-child {
+    display: none;
+  }
+
+  .item {
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+}
