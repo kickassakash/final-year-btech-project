@@ -31,10 +31,7 @@ const HomeContainer = () => {
         </p>
 
         <p className="text-base text-textColor text-center md:text-left md:w-[80%]">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima velit
-          eaque fugit distinctio est nam voluptatum architecto, porro iusto
-          deserunt recusandae ipsa minus eos sunt, dolores illo repellat facere
-          suscipit!
+        Welcome to Meals2Go, the ultimate food ordering app! We are thrilled to have you here and can't wait to help you satisfy your cravings. Our mission is to provide you with a seamless and enjoyable experience as you explore the variety of delicious dishes that we offer.
         </p>
 
         <button

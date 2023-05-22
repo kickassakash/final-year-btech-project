@@ -1,17 +1,69 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
-
 import { motion } from "framer-motion";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
+import { loadStripe } from "@stripe/stripe-js";
+
+let stripePromise;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe('pk_test_51N2vaVSCiTDD8rVQ0w2o2fVdSZLQvwhsnUmWWA9CU15FFkWWyE01Z4dnSVoXBlGQlpLUwj4oVOcUJTyepUFXlBFe00OQPsBqIw');
+  }
+  
+  return stripePromise;
+
+};
+
 
 const CartContainer = () => {
+  //const stripe = require("stripe")(process.env.STRIPE_PUBLISHABLE_KEY);
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
+  //const stripePromise = loadStripe();
+  const [stripeError, setStripeError] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  let items = []
+  
+  const item1 = {
+    price: "price_1N7ZwkSCiTDD8rVQvKmOz0po", 
+    quantity: 2
+  };
+  const item2 = {
+    price: "price_1N7c5kSCiTDD8rVQoF35yY2K",
+    quantity:1
+  }
+  cartItems.map((item) => {
+    let newitem = {
+      price: item.priceApi,
+      quantity: item.qty
+    }
+    console.log(newitem);
+    items.push(newitem);
+  })
+  const checkoutOptions = {
+    lineItems: items,
+    mode: "payment",
+    successUrl: "http://localhost:3000",
+    cancelUrl: "http://localhost:3000"
+  };
+
+  const redirectToCheckout = async () => {
+    setLoading(true);
+    console.log("redirectToCheckout");
+    const stripe = await getStripe()
+    const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    console.log("Stripe checkout error", error);
+
+    if (error) setStripeError(error.message);
+    setLoading(false);
+  };
+
 
   const showCart = () => {
     dispatch({
@@ -20,12 +72,14 @@ const CartContainer = () => {
     });
   };
 
+
   useEffect(() => {
     let totalPrice = cartItems.reduce(function (accumulator, item) {
       return accumulator + item.qty * item.price;
     }, 0);
     setTot(totalPrice);
     console.log(tot);
+    console.log(cartItems);
   }, [tot, flag]);
 
   const clearCart = () => {
@@ -102,6 +156,7 @@ const CartContainer = () => {
                 whileTap={{ scale: 0.8 }}
                 type="button"
                 className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-gray-50 text-lg my-2 hover:shadow-lg"
+                onClick={redirectToCheckout}
               >
                 Check Out
               </motion.button>
