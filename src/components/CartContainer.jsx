@@ -26,18 +26,8 @@ const CartContainer = () => {
   const [flag, setFlag] = useState(1);
   const [tot, setTot] = useState(0);
   //const stripePromise = loadStripe();
-  const [stripeError, setStripeError] = useState(null);
-  const [isLoading, setLoading] = useState(false);
   let items = []
   
-  const item1 = {
-    price: "price_1N7ZwkSCiTDD8rVQvKmOz0po", 
-    quantity: 2
-  };
-  const item2 = {
-    price: "price_1N7c5kSCiTDD8rVQoF35yY2K",
-    quantity:1
-  }
   cartItems.map((item) => {
     let newitem = {
       price: item.priceApi,
@@ -45,6 +35,7 @@ const CartContainer = () => {
     }
     console.log(newitem);
     items.push(newitem);
+    return newitem;
   })
   const checkoutOptions = {
     lineItems: items,
@@ -54,14 +45,12 @@ const CartContainer = () => {
   };
 
   const redirectToCheckout = async () => {
-    setLoading(true);
     console.log("redirectToCheckout");
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout(checkoutOptions);
     console.log("Stripe checkout error", error);
 
-    if (error) setStripeError(error.message);
-    setLoading(false);
+    if (error) console.log(error.message);
   };
 
 
@@ -80,7 +69,7 @@ const CartContainer = () => {
     setTot(totalPrice);
     console.log(tot);
     console.log(cartItems);
-  }, [tot, flag]);
+  }, [cartItems, tot, flag]);
 
   const clearCart = () => {
     dispatch({
