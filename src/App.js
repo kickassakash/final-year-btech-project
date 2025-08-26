@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { CreateContainer, Header, MainContainer , Footer } from "./components";
@@ -7,20 +7,25 @@ import { getAllFoodItems } from "./utils/firebaseFunctions";
 import { actionType } from "./context/reducer";
 
 const App = () => {
-  const [{ foodItems }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
 
-  const fetchData = async () => {
-    await getAllFoodItems().then((data) => {
-      dispatch({
-        type: actionType.SET_FOOD_ITEMS,
-        foodItems: data,
+  const fetchData = useCallback(async () => {
+    try {
+      await getAllFoodItems().then((data) => {
+        dispatch({
+          type: actionType.SET_FOOD_ITEMS,
+          foodItems: data,
+        });
       });
-    });
-  };
+    } catch (error) {
+      console.error("Failed to fetch food items:", error);
+      // You could set an error state here if needed
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <AnimatePresence exitBeforeEnter>

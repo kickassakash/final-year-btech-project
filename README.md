@@ -1,4 +1,45 @@
-# Getting Started with Create React App
+# Meals2GO - Restaurant Food Delivery App
+
+This is a modern React food delivery application built with Firebase backend.
+
+## 🚀 Live Demo
+
+Visit the live application: [https://kickassakash.github.io/final-year-btech-project/](https://kickassakash.github.io/final-year-btech-project/)
+
+## 🔧 Firebase Configuration
+
+### Potential Authentication Issues
+
+If you encounter Firebase authentication issues after long periods of inactivity:
+
+1. **Token Expiration**: Firebase tokens expire automatically for security. Users need to re-authenticate.
+2. **Authorized Domains**: Make sure the following domains are added to Firebase Auth:
+   - `localhost` (for development)
+   - `kickassakash.github.io` (for GitHub Pages deployment)
+
+### Firebase Setup Steps
+
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Navigate to Authentication > Settings > Authorized domains
+3. Add your deployment domain if not already present
+4. Check Firestore rules to ensure proper read/write permissions
+
+## 📦 Deployment
+
+### GitHub Pages Deployment
+
+The app is configured for automatic deployment to GitHub Pages via GitHub Actions.
+
+**Manual Deployment:**
+```bash
+npm run deploy
+```
+
+**Automatic Deployment:**
+- Pushes to `main` branch trigger automatic deployment
+- GitHub Actions workflow builds and deploys the app
+
+## 🛠 Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
